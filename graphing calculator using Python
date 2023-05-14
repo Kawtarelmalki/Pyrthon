@@ -1,0 +1,112 @@
+from tkinter import *
+from tkinter import messagebox
+
+
+def choix_base_hex():
+    return
+    
+def choix_base_dec():
+   return
+
+def choix_base_oct():
+    return
+
+def choix_base_bin():
+    return
+
+def reset_background_color_buttons():
+    return
+    
+def bouton_saisi(bouton):
+   return
+      
+def choix_lg_codage_oct():
+   return
+    
+           
+BG_BASE_CHOISIE = "#6699ff"
+
+ENTIERS_SIGNES = True
+if ENTIERS_SIGNES:
+    PAVE_SAISI = [["A","B","7","8","9"],["C","D","4","5","6"],["E","F","1","2","3"],[" ","±","0"," ","EFF"]]
+else:
+    PAVE_SAISI = [["A","B","7","8","9"],["C","D","4","5","6"],["E","F","1","2","3"],[" "," ","0"," ","EFF"]]
+
+base_courante = "DEC"
+fenetre=Tk()
+fenetre.geometry("600x600")
+fenetre.withdraw()
+fenetre.title("Calculatrice programmeur")
+frame_resultat = Frame(fenetre)
+frame_resultat.grid(column = 0,row = 0,sticky=E)
+resultat = StringVar()
+lbl_resultat = Label(frame_resultat, textvariable=resultat,font=("Courier", 20))
+resultat.set("0")
+nombre_courant_base_10 = 0
+lbl_resultat.grid(column = 0,row = 0,sticky=E) 
+frame_bases = Frame(fenetre,width=500)
+frame_bases.grid(column = 0,row = 1,sticky=W)
+
+btn_base_hex = Button(frame_bases, text="HEX",command=choix_base_hex,font=("Courier", 15))
+orig_color = btn_base_hex.cget("background")
+btn_base_hex.grid(column = 0,row = 0,sticky=W) 
+
+resultat_hex = StringVar()
+lbl_resultat_hex = Label(frame_bases, textvariable=resultat_hex,font=("Courier", 15))
+resultat_hex.set("0")
+lbl_resultat_hex.grid(column = 1,row = 0,sticky=W) 
+
+btn_base_dec = Button(frame_bases, text="DEC",bg = BG_BASE_CHOISIE,command=choix_base_dec,font=("Courier", 15))
+btn_base_dec.grid(column = 0,row = 1) 
+resultat_dec = StringVar()
+lbl_resultat_dec = Label(frame_bases, textvariable=resultat_dec,font=("Courier", 15))
+resultat_dec.set("0")
+lbl_resultat_dec.grid(column = 1,row = 1,sticky=W) 
+
+btn_base_oct = Button(frame_bases, text="OCT",command=choix_base_oct,font=("Courier", 15))
+btn_base_oct.grid(column = 0,row = 2) 
+resultat_oct = StringVar()
+lbl_resultat_oct = Label(frame_bases, textvariable=resultat_oct,font=("Courier", 15))
+resultat_oct.set("0")
+lbl_resultat_oct.grid(column = 1,row = 2,sticky=W) 
+
+btn_base_bin = Button(frame_bases, text="BIN",command=choix_base_bin,font=("Courier", 15))
+btn_base_bin.grid(column = 0,row = 3) 
+resultat_bin = StringVar()
+lbl_resultat_bin = Label(frame_bases, textvariable=resultat_bin,font=("Courier", 15))
+resultat_bin.set("0")
+lbl_resultat_bin.grid(column = 1,row = 3,sticky=W) 
+
+frame_padding_1 = Frame(fenetre,height=30)
+frame_padding_1.grid(column = 0,row = 2)
+
+frame_lg_codage = Frame(fenetre,height=30)
+frame_lg_codage.grid(column = 0,row = 3)
+nb_octets = 2
+lg_codage = StringVar()
+btn_lg_codage = Button(frame_lg_codage,textvariable=lg_codage,command=choix_lg_codage_oct,font=("Courier", 15))
+lg_codage.set("2 octets")
+btn_lg_codage.grid(column = 0,row = 0) 
+
+frame_padding_1 = Frame(fenetre,height=30)
+frame_padding_1.grid(column = 0,row = 4)
+
+frame_chiffres = Frame(fenetre)
+frame_chiffres.grid(column = 0,row = 5,sticky=W)
+lst_btn_pave_saisi = []
+lig = 0
+for l in PAVE_SAISI:
+    lig_btn_chiffres = []
+    col = 0
+    for c in l:
+        b = Button(frame_chiffres, width=3,text=c,font=("Courier", 20),command=lambda bouton = c: bouton_saisi(bouton))
+        lig_btn_chiffres.append(b)
+        if c != " ":
+            b.grid(column = col,row = lig) 
+        col += 1
+    lst_btn_pave_saisi.append(lig_btn_chiffres)
+    lig += 1
+
+fenetre.update()
+fenetre.deiconify()
+fenetre.mainloop()
