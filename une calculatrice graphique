@@ -1,0 +1,69 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Fonction pour représenter graphiquement une ou plusieurs fonctions
+def graph_functions(functions, x_range, y_range):
+    x = np.linspace(x_range[0], x_range[1], 1000)
+    for func in functions:
+        y = func(x)
+        plt.plot(x, y, label=str(func))
+    plt.xlim(x_range)
+    plt.ylim(y_range)
+    plt.legend()
+    plt.show()
+
+# Fonction pour créer un tableau de valeurs (x,y)
+def create_table(func, x_range, step):
+    x = np.arange(x_range[0], x_range[1] + step, step)
+    y = func(x)
+    table = list(zip(x, y))
+    print(" x | y ")
+    print("___|___")
+    for row in table:
+        print("{:.1f}|{:.1f}".format(row[0], row[1]))
+
+# Fonction pour abat-jour au-dessus ou en dessous de la ligne
+def shade_above_below(func, x_range, above=True):
+    x = np.linspace(x_range[0], x_range[1], 1000)
+    y = func(x)
+    plt.plot(x, y, color='blue', label=str(func))
+    if above:
+        plt.fill_between(x, y, max(y), color='gray', alpha=0.5)
+    else:
+        plt.fill_between(x, y, min(y), color='gray', alpha=0.5)
+    plt.legend()
+    plt.show()
+
+# Fonction pour résoudre et représenter graphiquement un système d'équations
+def solve_and_graph_system(equations, x_range, y_range):
+    x = np.linspace(x_range[0], x_range[1], 1000)
+    for eq in equations:
+        y = eval(eq)(x)
+        plt.plot(x, y, label=str(eq))
+    plt.xlim(x_range)
+    plt.ylim(y_range)
+    intersection = np.array(np.linalg.solve([eval(equations[0]).coeffs, eval(equations[1]).coeffs], [0, 0]))
+    plt.plot(intersection[0], intersection[1], marker='o', color='black')
+    plt.legend()
+    plt.show()
+
+# Fonction pour effectuer un zoom avant ou arrière sur un graphique
+def zoom(functions, x_range, y_range, zoom_factor):
+    center_x = (x_range[0] + x_range[1]) / 2
+    center_y = (y_range[0] + y_range[1]) / 2
+    new_x_range = [(x_range[0] - center_x) * zoom_factor + center_x, (x_range[1] - center_x) * zoom_factor + center_x]
+    new_y_range = [(y_range[0] - center_y) * zoom_factor + center_y, (y_range[1] - center_y) * zoom_factor + center_y]
+    graph_functions(functions, new_x_range, new_y_range)
+
+# Fonction pour résoudre des équations quadratiques
+def solve_quadratic(a, b, c):
+    discriminant = b**2 - 4*a*c
+    if discriminant > 0:
+        x1 = (-b + np.sqrt(discriminant)) / (2*a)
+        x2 = (-b - np.sqrt(discriminant)) / (2*a)
+        return (x1, x2)
+    elif discriminant == 0:
+        x = -b / (2*a)
+        return (x,)
+    else:
+        return None
